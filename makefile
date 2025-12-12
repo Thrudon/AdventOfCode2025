@@ -1,15 +1,21 @@
 CC = g++
-CFLAG = -Wall -pedantic
+CFLAG = -Wall -pedantic -Wextra
 STD = -std=c++17
 SRC = src/
 INC = inc/
 OBJ = obj/
 BIN = bin/
 
-$(BIN)AOC.exe: $(OBJ)main.o $(OBJ)daytwo.o $(OBJ)dayone.o $(OBJ)exercice.o
+$(BIN)AOC.exe: $(OBJ)main.o $(OBJ)dayfour.o $(OBJ)daythree.o $(OBJ)daytwo.o $(OBJ)dayone.o $(OBJ)exercice.o
 	$(CC) $(STD) -o $@ $^ $(CFLAG)
 
-$(OBJ)main.o: main.cpp $(INC)daytwo.h $(INC)dayone.h $(INC)exercice.h
+$(OBJ)main.o: main.cpp $(INC)dayfour.h $(INC)daythree.h $(INC)daytwo.h $(INC)dayone.h $(INC)exercice.h
+	$(CC) $(STD) -o $@ -c $< $(CFLAG)
+
+$(OBJ)dayfour.o: $(SRC)dayfour.cpp $(INC)dayfour.h $(INC)exercice.h
+	$(CC) $(STD) -o $@ -c $< $(CFLAG)
+
+$(OBJ)daythree.o: $(SRC)daythree.cpp $(INC)daythree.h $(INC)exercice.h
 	$(CC) $(STD) -o $@ -c $< $(CFLAG)
 
 $(OBJ)daytwo.o: $(SRC)daytwo.cpp $(INC)daytwo.h $(INC)exercice.h

@@ -1,13 +1,13 @@
-#ifndef DAYONE_H
-#define DAYONE_H
+#ifndef DAYFOUR_H
+#define DAYFOUR_H
 
 #include "exercice.h"
 
-class DayOne : public Exercice
+class DayFour : public Exercice
 {
 public:
-	DayOne(char* &filepath);
-	virtual ~DayOne();
+	DayFour(char* &filepath);
+	virtual ~DayFour();
 	virtual void Solve(std::string &result, int &part);
 
 protected:

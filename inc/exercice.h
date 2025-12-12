@@ -13,6 +13,9 @@ public:
 protected:
 	char* _filepath;
 
+	virtual void SolvePartOne(std::string &result) = 0;
+	virtual void SolvePartTwo(std::string &result) = 0;
+
 private: 
 };
 

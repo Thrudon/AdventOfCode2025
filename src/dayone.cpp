@@ -2,7 +2,6 @@
 
 #include <fstream>
 #include <sstream>
-#include <string>
 #include <cstring>
 
 #include "../inc/dayone.h"
@@ -19,10 +18,10 @@ void DayOne::Solve(std::string &result, int &part)
 	switch(part)
 	{
 	case 1:
-		SolvePartOne(result, part);
+		SolvePartOne(result);
 		break;
 	case 2:
-		SolvePartTwo(result, part);
+		SolvePartTwo(result);
 		break;
 	default:
 		result = "Invalid part !";
@@ -30,7 +29,7 @@ void DayOne::Solve(std::string &result, int &part)
 	return;
 }
 
-void DayOne::SolvePartOne(std::string &result, int &part)
+void DayOne::SolvePartOne(std::string &result)
 {
 	std::ifstream file(_filepath);
 	if (!file)
@@ -56,7 +55,7 @@ void DayOne::SolvePartOne(std::string &result, int &part)
 	return;
 }
 
-void DayOne::SolvePartTwo(std::string &result, int &part)
+void DayOne::SolvePartTwo(std::string &result)
 {
 	std::ifstream file(_filepath);
 	if (!file)

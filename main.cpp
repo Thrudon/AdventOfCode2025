@@ -4,6 +4,8 @@
 
 #include "inc/dayone.h"
 #include "inc/daytwo.h"
+#include "inc/daythree.h"
+#include "inc/dayfour.h"
 
 int main(int argc, char* argv[])
 {
@@ -19,8 +21,10 @@ int main(int argc, char* argv[])
 	{
 	case 4:
 		part = std::stoi(argv[argc-2]);
+		[[fallthrough]];
 	case 3:
 		day = std::stoi(argv[argc-3]);
+		[[fallthrough]];
 	case 2:
 		filepath = argv[argc-1];
 		break;
@@ -43,6 +47,12 @@ int main(int argc, char* argv[])
 		break;
 	case 2:
 		currentEx = new DayTwo(filepath);
+		break;
+	case 3:
+		currentEx = new DayThree(filepath);
+		break;
+	case 4:
+		currentEx = new DayFour(filepath);
 		break;
 	}
 
