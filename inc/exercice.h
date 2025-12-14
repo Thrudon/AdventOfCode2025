@@ -8,13 +8,14 @@ class Exercice
 public:
 	Exercice(char* &filepath);
 	virtual ~Exercice();
-	virtual void Solve(std::string &result, int &part) = 0;
+	virtual void solve(std::string &result, int &part) = 0;
 
 protected:
 	char* _filepath;
 
-	virtual void SolvePartOne(std::string &result) = 0;
-	virtual void SolvePartTwo(std::string &result) = 0;
+	virtual void solvePartOne(std::string &result) = 0;
+	virtual void solvePartTwo(std::string &result) = 0;
+	std::string addStrings(const std::string &str1, const std::string &str2);
 
 private: 
 };

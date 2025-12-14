@@ -1,6 +1,8 @@
 #ifndef DAYFOUR_H
 #define DAYFOUR_H
 
+#include <vector>
+
 #include "exercice.h"
 
 class DayFour : public Exercice
@@ -8,13 +10,14 @@ class DayFour : public Exercice
 public:
 	DayFour(char* &filepath);
 	virtual ~DayFour();
-	virtual void Solve(std::string &result, int &part);
+	virtual void solve(std::string &result, int &part);
 
 protected:
-	virtual void SolvePartOne(std::string &result);
-	virtual void SolvePartTwo(std::string &result);
+	virtual void solvePartOne(std::string &result);
+	virtual void solvePartTwo(std::string &result);
 
 private: 
+	int removeRolls(std::vector<std::string> &wall);
 };
 
 #endif

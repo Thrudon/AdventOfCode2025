@@ -2,7 +2,6 @@
 
 #include <fstream>
 #include <sstream>
-#include <cstring>
 
 #include "../inc/daythree.h"
 
@@ -13,15 +12,15 @@ DayThree::DayThree(char* &filepath) :
 DayThree::~DayThree()
 {}
 
-void DayThree::Solve(std::string &result, int &part)
+void DayThree::solve(std::string &result, int &part)
 {
 	switch(part)
 	{
 	case 1:
-		SolvePartOne(result);
+		solvePartOne(result);
 		break;
 	case 2:
-		SolvePartTwo(result);
+		solvePartTwo(result);
 		break;
 	default:
 		result = "Invalid part !";
@@ -29,7 +28,7 @@ void DayThree::Solve(std::string &result, int &part)
 	return;
 }
 
-void DayThree::SolvePartOne(std::string &result)
+void DayThree::solvePartOne(std::string &result)
 {
 	std::ifstream file(_filepath);
 	if (!file)
@@ -38,20 +37,17 @@ void DayThree::SolvePartOne(std::string &result)
 		return;
 	}
 
-	unsigned long long res = 0;
+	result = "0";
 
 	std::string line;
 	while (std::getline(file, line))
 	{
-		res += getJoltage(line, 2);
+		result = addStrings(result, getJoltage(line, 2));
 	}
 	file.close();
-
-	result = std::to_string(res);
-	return;
 }
 
-void DayThree::SolvePartTwo(std::string &result)
+void DayThree::solvePartTwo(std::string &result)
 {
 	std::ifstream file(_filepath);
 	if (!file)
@@ -60,20 +56,17 @@ void DayThree::SolvePartTwo(std::string &result)
 		return;
 	}
 
-	unsigned long long res = 0;
+	result = "0";
 
 	std::string line;
 	while (std::getline(file, line))
 	{
-		res += getJoltage(line, 12);
+		result = addStrings(result, getJoltage(line, 12));
 	}
 	file.close();
-
-	result = std::to_string(res);
-	return;
 }
 
-unsigned long long DayThree::getJoltage(const std::string& batteryLine, int usableAmount)
+std::string DayThree::getJoltage(const std::string& batteryLine, int usableAmount)
 {
 	std::string joltages = batteryLine.substr(batteryLine.size() - usableAmount);
 
@@ -93,5 +86,5 @@ unsigned long long DayThree::getJoltage(const std::string& batteryLine, int usab
 		}
 	}
 
-	return std::stoull(joltages);
+	return joltages;
 }

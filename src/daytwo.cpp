@@ -2,7 +2,6 @@
 
 #include <fstream>
 #include <sstream>
-#include <cstring>
 #include <vector>
 #include <algorithm>
 
@@ -15,15 +14,15 @@ DayTwo::DayTwo(char* &filepath) :
 DayTwo::~DayTwo()
 {}
 
-void DayTwo::Solve(std::string &result, int &part)
+void DayTwo::solve(std::string &result, int &part)
 {
 	switch(part)
 	{
 	case 1:
-		SolvePartOne(result);
+		solvePartOne(result);
 		break;
 	case 2:
-		SolvePartTwo(result);
+		solvePartTwo(result);
 		break;
 	default:
 		result = "Invalid part !";
@@ -31,7 +30,7 @@ void DayTwo::Solve(std::string &result, int &part)
 	return;
 }
 
-void DayTwo::SolvePartOne(std::string &result)
+void DayTwo::solvePartOne(std::string &result)
 {
 	std::ifstream file(_filepath);
 	if (!file)
@@ -40,7 +39,7 @@ void DayTwo::SolvePartOne(std::string &result)
 		return;
 	}
 
-	unsigned long long res = 0;
+	result = "0";
 
 	std::string line;
 	while (std::getline(file, line, ','))
@@ -54,25 +53,22 @@ void DayTwo::SolvePartOne(std::string &result)
 		std::string borneMin = min.substr(0, (min.size()/2 == 0 ? 1 : min.size()/2));
 		std::string borneMax = max.substr(0, (max.size() % 2 ? max.size()/2 + 1: max.size()/2));
 
-		for (std::string val = borneMin; (val.size() < borneMax.size() || std::strcmp(val.c_str(), borneMax.c_str()) <= 0); incrStrVal(val))
+		for (std::string val = borneMin; (val.size() < borneMax.size() || val <= borneMax); val = addStrings(val, "1"))
 		{
 			std::string strVal = val;
 			strVal.append(val);
 
-			if (strVal.size() < min.size() || (std::strcmp(strVal.c_str(), min.c_str()) < 0 && strVal.size() == min.size()))
+			if (strVal.size() < min.size() || (strVal < min && strVal.size() == min.size()))
 				continue;
-			if (strVal.size() > max.size() || (std::strcmp(strVal.c_str(), max.c_str()) > 0 && strVal.size() == max.size()))
+			if (strVal.size() > max.size() || (strVal > max && strVal.size() == max.size()))
 				break;
-			res += std::stoull(strVal);
+			result = addStrings(result, strVal);
 		}
 	}
 	file.close();
-
-	result = std::to_string(res);
-	return;
 }
 
-void DayTwo::SolvePartTwo(std::string &result)
+void DayTwo::solvePartTwo(std::string &result)
 {
 	std::ifstream file(_filepath);
 	if (!file)
@@ -84,7 +80,7 @@ void DayTwo::SolvePartTwo(std::string &result)
 	// old - 17298174201
 	// cur - 13802501794
 
-	unsigned long long res = 0;
+	result = "0";
 
 	std::string line;
 	while (std::getline(file, line, ','))
@@ -121,7 +117,8 @@ void DayTwo::SolvePartTwo(std::string &result)
 
 			for (unsigned int i = 0; i < validSizes.size(); i++)
 			{
-				for (std::string val = strMinVals[i]; val.size() <= (validSizes[i] < max.size() ? std::string(n, '9') : max.substr(0, n)).size() && std::strcmp(val.c_str(), (validSizes[i] < max.size() ? std::string(n, '9') : max.substr(0, n)).c_str()) <= 0; incrStrVal(val))
+				std::string curMax = validSizes[i] < max.size() ? std::string(n, '9') : max.substr(0, n);
+				for (std::string val = strMinVals[i]; val.size() <= curMax.size() && val <= curMax; val = addStrings(val, "1"))
 				{
 					std::string strVal = val;
 					while (strVal.size() < validSizes[i])
@@ -129,7 +126,7 @@ void DayTwo::SolvePartTwo(std::string &result)
 
 					if (std::find(testedValues.begin(), testedValues.end(), strVal) == testedValues.end())
 					{
-						res += ((strVal.size() > min.size() || std::strcmp(strVal.c_str(), min.c_str()) >= 0) && (strVal.size() < max.size() || std::strcmp(strVal.c_str(), max.c_str()) <= 0)) ? std::stoull(strVal) : 0;
+						result = addStrings(result, ((strVal.size() > min.size() || strVal >= min) && (strVal.size() < max.size() || strVal <= max.c_str())) ? strVal : "0");
 						testedValues.push_back(strVal);
 					}
 				}
@@ -137,21 +134,4 @@ void DayTwo::SolvePartTwo(std::string &result)
 		}
 	}
 	file.close();
-
-	result = std::to_string(res);
-	return;
-}
-
-void DayTwo::incrStrVal(std::string &strVal, int incr)
-{
-	std::string::reverse_iterator it = strVal.rbegin();
-	while (incr && it != strVal.rend())
-	{
-		int value = (*it - '0') + incr;
-		incr = value / 10;
-		*it = '0' + (value % 10);
-		++it;
-	}
-	if (incr)
-		strVal.insert(0, "1");
 }

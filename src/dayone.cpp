@@ -2,7 +2,6 @@
 
 #include <fstream>
 #include <sstream>
-#include <cstring>
 
 #include "../inc/dayone.h"
 
@@ -13,15 +12,15 @@ DayOne::DayOne(char* &filepath) :
 DayOne::~DayOne()
 {}
 
-void DayOne::Solve(std::string &result, int &part)
+void DayOne::solve(std::string &result, int &part)
 {
 	switch(part)
 	{
 	case 1:
-		SolvePartOne(result);
+		solvePartOne(result);
 		break;
 	case 2:
-		SolvePartTwo(result);
+		solvePartTwo(result);
 		break;
 	default:
 		result = "Invalid part !";
@@ -29,7 +28,7 @@ void DayOne::Solve(std::string &result, int &part)
 	return;
 }
 
-void DayOne::SolvePartOne(std::string &result)
+void DayOne::solvePartOne(std::string &result)
 {
 	std::ifstream file(_filepath);
 	if (!file)
@@ -44,7 +43,8 @@ void DayOne::SolvePartOne(std::string &result)
 	std::string line;
 	while (std::getline(file, line))
 	{
-		pos += line.substr(0, 1) == "R" ? std::stoi(line.substr(1)) : -std::stoi(line.substr(1));
+		int val = std::stoi(line.substr(1));
+		pos += line.substr(0, 1) == "R" ? val : -val;
 		pos %= 100;
 		if (pos == 0)
 			res++;
@@ -55,7 +55,7 @@ void DayOne::SolvePartOne(std::string &result)
 	return;
 }
 
-void DayOne::SolvePartTwo(std::string &result)
+void DayOne::solvePartTwo(std::string &result)
 {
 	std::ifstream file(_filepath);
 	if (!file)
@@ -70,7 +70,6 @@ void DayOne::SolvePartTwo(std::string &result)
 	std::string line;
 	while (std::getline(file, line))
 	{
-		std::cerr << line << " - " << pos << " - " << res << std::endl;
 		int val = std::stoi(line.substr(1));
 		if (line.substr(0, 1) == "R")
 		{

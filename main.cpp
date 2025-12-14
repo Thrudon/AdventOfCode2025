@@ -6,6 +6,7 @@
 #include "inc/daytwo.h"
 #include "inc/daythree.h"
 #include "inc/dayfour.h"
+#include "inc/dayfive.h"
 
 int main(int argc, char* argv[])
 {
@@ -54,6 +55,9 @@ int main(int argc, char* argv[])
 	case 4:
 		currentEx = new DayFour(filepath);
 		break;
+	case 5:
+		currentEx = new DayFive(filepath);
+		break;
 	}
 
 	if (!currentEx)
@@ -63,7 +67,7 @@ int main(int argc, char* argv[])
 	}
 
 	std::string result;
-	currentEx->Solve(result, part);
+	currentEx->solve(result, part);
 
 	std::cout << "Resultat : " << result << std::endl;
 	// std::cerr << "Jour " << day << " - Partie " << part << " - Fichier: " << filepath << std::endl;
