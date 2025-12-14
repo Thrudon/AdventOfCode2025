@@ -51,23 +51,19 @@ void DayTwo::SolvePartOne(std::string &result)
 		if (min.size() % 2 && min.size() == max.size())
 			continue;
 
-		int borneMin = std::stoi(min.substr(0, (min.size()/2 == 0 ? 1 : min.size()/2)));
-		int borneMax = std::stoi(max.substr(0, (max.size() % 2 ? max.size()/2 + 1: max.size()/2)));
+		std::string borneMin = min.substr(0, (min.size()/2 == 0 ? 1 : min.size()/2));
+		std::string borneMax = max.substr(0, (max.size() % 2 ? max.size()/2 + 1: max.size()/2));
 
-		for (int i = borneMin; i <= borneMax; i++)
+		for (std::string val = borneMin; (val.size() < borneMax.size() || std::strcmp(val.c_str(), borneMax.c_str()) <= 0); incrStrVal(val))
 		{
-			std::string strVal = std::to_string(i);
-			strVal.append(std::to_string(i));
-			unsigned long long val = std::stoull(strVal);
+			std::string strVal = val;
+			strVal.append(val);
 
-			if (val < std::stoull(min))
+			if (strVal.size() < min.size() || (std::strcmp(strVal.c_str(), min.c_str()) < 0 && strVal.size() == min.size()))
 				continue;
-			if (val > std::stoull(max))
+			if (strVal.size() > max.size() || (std::strcmp(strVal.c_str(), max.c_str()) > 0 && strVal.size() == max.size()))
 				break;
-			if (val >= std::stoull(min) && val <= std::stoull(max))
-				res += val;
-			
-			// std::cerr << std::stoull(min) << " - " << val << " - " << std::stoull(max) << " : " << res << std::endl;
+			res += std::stoull(strVal);
 		}
 	}
 	file.close();
@@ -84,6 +80,9 @@ void DayTwo::SolvePartTwo(std::string &result)
 		result = "Couldn't open file !";
 		return;
 	}
+
+	// old - 17298174201
+	// cur - 13802501794
 
 	unsigned long long res = 0;
 
@@ -119,17 +118,18 @@ void DayTwo::SolvePartTwo(std::string &result)
 			if (validSizes.size() == 0)
 				continue;
 
+
 			for (unsigned int i = 0; i < validSizes.size(); i++)
 			{
-				for (unsigned long long val = std::stoull(strMinVals[i]); val <= std::stoull(validSizes[i] < max.size() ? std::string(n, '9') : max.substr(0, n)); val++)
+				for (std::string val = strMinVals[i]; val.size() <= (validSizes[i] < max.size() ? std::string(n, '9') : max.substr(0, n)).size() && std::strcmp(val.c_str(), (validSizes[i] < max.size() ? std::string(n, '9') : max.substr(0, n)).c_str()) <= 0; incrStrVal(val))
 				{
-					std::string strVal;
+					std::string strVal = val;
 					while (strVal.size() < validSizes[i])
-						strVal.append(std::to_string(val));
+						strVal.append(val);
 
 					if (std::find(testedValues.begin(), testedValues.end(), strVal) == testedValues.end())
 					{
-						res += compareValToMinMax(std::stoull(min), std::stoull(max), std::stoull(strVal)) ? std::stoull(strVal) : 0;
+						res += ((strVal.size() > min.size() || std::strcmp(strVal.c_str(), min.c_str()) >= 0) && (strVal.size() < max.size() || std::strcmp(strVal.c_str(), max.c_str()) <= 0)) ? std::stoull(strVal) : 0;
 						testedValues.push_back(strVal);
 					}
 				}
@@ -142,7 +142,16 @@ void DayTwo::SolvePartTwo(std::string &result)
 	return;
 }
 
-bool DayTwo::compareValToMinMax(const unsigned long long &min, const unsigned long long &max, const unsigned long long &val)
+void DayTwo::incrStrVal(std::string &strVal, int incr)
 {
-	return (val >= min && val <= max);
+	std::string::reverse_iterator it = strVal.rbegin();
+	while (incr && it != strVal.rend())
+	{
+		int value = (*it - '0') + incr;
+		incr = value / 10;
+		*it = '0' + (value % 10);
+		++it;
+	}
+	if (incr)
+		strVal.insert(0, "1");
 }

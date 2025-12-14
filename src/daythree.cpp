@@ -75,7 +75,7 @@ void DayThree::SolvePartTwo(std::string &result)
 
 unsigned long long DayThree::getJoltage(const std::string& batteryLine, int usableAmount)
 {
-	std::string joltages = batteryLine.substr(batteryLine.size() - usableAmout);
+	std::string joltages = batteryLine.substr(batteryLine.size() - usableAmount);
 
 	for (int i = batteryLine.size() - (usableAmount + 1); i >= 0; i--)
 	{

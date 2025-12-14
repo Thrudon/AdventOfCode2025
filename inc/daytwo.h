@@ -1,6 +1,8 @@
 #ifndef DAYTWO_H
 #define DAYTWO_H
 
+#include <cstring>
+
 #include "exercice.h"
 
 class DayTwo : public Exercice
@@ -15,7 +17,7 @@ protected:
 	virtual void SolvePartTwo(std::string &result);
 
 private: 
-	bool compareValToMinMax(const unsigned long long &min, const unsigned long long &max, const unsigned long long &val);
+	void incrStrVal(std::string &strVal, int incr = 1);
 };
 
 #endif
