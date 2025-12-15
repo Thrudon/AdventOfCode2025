@@ -7,6 +7,7 @@
 #include "inc/daythree.h"
 #include "inc/dayfour.h"
 #include "inc/dayfive.h"
+#include "inc/daysix.h"
 
 int main(int argc, char* argv[])
 {
@@ -58,6 +59,21 @@ int main(int argc, char* argv[])
 	case 5:
 		currentEx = new DayFive(filepath);
 		break;
+	case 6:
+		currentEx = new DaySix(filepath);
+		break;
+	// case 7:
+	// 	currentEx = new DaySeven(filepath);
+	// 	break;
+	// case 8:
+	// 	currentEx = new DayEight(filepath);
+	// 	break;
+	// case 9:
+	// 	currentEx = new DayNine(filepath);
+	// 	break;
+	// case 10:
+	// 	currentEx = new DayTen(filepath);
+	// 	break;
 	}
 
 	if (!currentEx)

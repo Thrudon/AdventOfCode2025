@@ -6,10 +6,13 @@ INC = inc/
 OBJ = obj/
 BIN = bin/
 
-$(BIN)AOC.exe: $(OBJ)main.o $(OBJ)exercice.o $(OBJ)dayone.o $(OBJ)daytwo.o $(OBJ)daythree.o $(OBJ)dayfour.o $(OBJ)dayfive.o
+$(BIN)AOC.exe: $(OBJ)main.o $(OBJ)exercice.o $(OBJ)dayone.o $(OBJ)daytwo.o $(OBJ)daythree.o $(OBJ)dayfour.o $(OBJ)dayfive.o $(OBJ)daysix.o
 	$(CC) $(STD) -o $@ $^ $(CFLAG)
 
-$(OBJ)main.o: main.cpp $(INC)exercice.h $(INC)dayone.h $(INC)daytwo.h $(INC)daythree.h $(INC)dayfour.h $(INC)dayfive.h
+$(OBJ)main.o: main.cpp $(INC)exercice.h $(INC)dayone.h $(INC)daytwo.h $(INC)daythree.h $(INC)dayfour.h $(INC)dayfive.h $(INC)daysix.h
+	$(CC) $(STD) -o $@ -c $< $(CFLAG)
+
+$(OBJ)daysix.o: $(SRC)daysix.cpp $(INC)exercice.h $(INC)daysix.h
 	$(CC) $(STD) -o $@ -c $< $(CFLAG)
 
 $(OBJ)dayfive.o: $(SRC)dayfive.cpp $(INC)exercice.h $(INC)dayfive.h
